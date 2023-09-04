@@ -1,4 +1,4 @@
-
+import java.util.List;
 public class Book {
     private int id;
     private String title;
@@ -86,8 +86,9 @@ public class Book {
     public void CreateBook(Book book){
         // create method
     }
-    public void getAllBooks(Book book){
-        // read method
+    public List<Book> getAllBooks() {
+        // get method
+        return null;
     }
     public void UpdateBook(Book book){
         // update method
@@ -96,8 +97,9 @@ public class Book {
     public void DeleteBook(String title,String isbn){
         // delete methode
     }
-    public void SearchBook(String isbn) {
+    public Book SearchBook(String isbn) {
         // search method
+        return null;
     }
 }
 
