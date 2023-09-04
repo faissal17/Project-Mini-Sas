@@ -83,6 +83,21 @@ public class Book {
     public void setQuantityImprinted(Integer quantityImprinted) {
         this.quantityImprinted = quantityImprinted;
     }
+    public void CreateBook(Book book){
+        // create method
+    }
+    public void getAllBooks(Book book){
+        // read method
+    }
+    public void UpdateBook(Book book){
+        // update method
+    }
 
+    public void DeleteBook(String title,String isbn){
+        // delete methode
+    }
+    public void SearchBook(String isbn) {
+        // search method
+    }
 }
 
