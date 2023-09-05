@@ -2,17 +2,17 @@ import java.util.List;
 public class Book {
     private int id;
     private String title;
-    private Author author;
+    private Author author_id;
     private String isbn;
     private String status;
     private Integer quantity;
     private Integer quantityLost;
     private Integer quantityImprinted;
 
-    public Book(int id ,String title, Author author, String isbn, String status, Integer quantity, Integer quantityLost, Integer quantityImprinted) {
+    public Book(int id ,String title, Author author_id, String isbn, String status, Integer quantity, Integer quantityLost, Integer quantityImprinted) {
         this.id = id;
         this.title = title;
-        this.author = author;
+        this.author_id = author_id;
         this.isbn = isbn;
         this.status = status;
         this.quantity = quantity;
@@ -37,11 +37,11 @@ public class Book {
     }
 
     public Author getAuthor() {
-        return author;
+        return author_id;
     }
 
     public void setAuthor(Author author) {
-        this.author = author;
+        this.author_id = author_id;
     }
 
     public String getIsbn() {
