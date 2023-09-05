@@ -1,6 +1,6 @@
 
 public class Reservation {
-    private String userIdCard;
+    private Integer user_id;
     private Book Book;
     private User User;
     private String bookTitle;
@@ -8,8 +8,8 @@ public class Reservation {
     private String dateDeReservation;
     private String dateDeReturn;
 
-         public Reservation(String userIdCard, String bookTitle, String bookIsbn, String dateDeReservation, String dateDeReturn, Book Book, User User){
-            this.userIdCard = userIdCard;
+         public Reservation(Integer user_id, String bookTitle, String bookIsbn, String dateDeReservation, String dateDeReturn, Book Book, User User){
+            this.user_id = user_id;
             this.bookTitle = bookTitle;
             this.bookIsbn = bookIsbn;
             this.dateDeReservation = dateDeReservation;
@@ -18,12 +18,12 @@ public class Reservation {
             this.User = User;
          }
 
-    public String getUserIdCard() {
-        return userIdCard;
+    public Integer getUserId() {
+        return user_id;
     }
 
-    public void setUserIdCard(String userIdCard) {
-        this.userIdCard = userIdCard;
+    public void setUserId(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public Book getBook() {

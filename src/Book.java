@@ -5,11 +5,12 @@ public class Book {
     private Author author_id;
     private String isbn;
     private String status;
+    private Integer quantityConstant;
     private Integer quantity;
     private Integer quantityLost;
-    private Integer quantityImprinted;
+    private Integer quantityReserved;
 
-    public Book(int id ,String title, Author author_id, String isbn, String status, Integer quantity, Integer quantityLost, Integer quantityImprinted) {
+    public Book(int id ,String title, Author author_id, String isbn, String status, Integer quantity, Integer quantityLost, Integer quantityReserved,Integer quantityConstant) {
         this.id = id;
         this.title = title;
         this.author_id = author_id;
@@ -17,7 +18,24 @@ public class Book {
         this.status = status;
         this.quantity = quantity;
         this.quantityLost = quantityLost;
-        this.quantityImprinted = quantityImprinted;
+        this.quantityReserved = quantityReserved;
+        this.quantityConstant = quantityConstant;
+    }
+
+    public Author getAuthor_id() {
+        return author_id;
+    }
+
+    public void setAuthor_id(Author author_id) {
+        this.author_id = author_id;
+    }
+
+    public Integer getQuantityConstant() {
+        return quantityConstant;
+    }
+
+    public void setQuantityConstant(Integer quantityConstant) {
+        this.quantityConstant = quantityConstant;
     }
 
     public int getId() {
@@ -76,12 +94,12 @@ public class Book {
         this.quantityLost = quantityLost;
     }
 
-    public Integer getQuantityImprinted() {
-        return quantityImprinted;
+    public Integer getQuantityReserved() {
+        return quantityReserved;
     }
 
-    public void setQuantityImprinted(Integer quantityImprinted) {
-        this.quantityImprinted = quantityImprinted;
+    public void setQuantityReserved(Integer quantityImprinted) {
+        this.quantityReserved = quantityReserved;
     }
     public void CreateBook(Book book){
         // create method

@@ -1175,5 +1175,132 @@
     <user id="347" parent="1" name="root">
       <Host>localhost</Host>
     </user>
+    <table id="348" parent="330" name="author">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="349" parent="330" name="books">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="350" parent="330" name="reservations">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="351" parent="330" name="user">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <column id="352" parent="348" name="id">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="353" parent="348" name="name">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <index id="354" parent="348" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="355" parent="348" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="356" parent="349" name="id">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="357" parent="349" name="title">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="358" parent="349" name="author_id">
+      <DasType>int(11)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="359" parent="349" name="isbn">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="360" parent="349" name="status">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="361" parent="349" name="quantityConstant">
+      <DasType>int(11)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="362" parent="349" name="quantity">
+      <DasType>int(11)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="363" parent="349" name="quantityLost">
+      <DasType>int(11)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="364" parent="349" name="quantityReserved">
+      <DasType>int(11)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <foreign-key id="365" parent="349" name="books_ibfk_1">
+      <ColNames>author_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>author</RefTableName>
+    </foreign-key>
+    <index id="366" parent="349" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="367" parent="349" name="author_id">
+      <ColNames>author_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="368" parent="349" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="369" parent="350" name="user_id">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="370" parent="350" name="bookTitle">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="371" parent="350" name="bookIsbn">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="372" parent="350" name="dateDeReservation">
+      <DasType>datetime|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="373" parent="350" name="dateDeReturn">
+      <DasType>datetime|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="374" parent="351" name="id">
+      <DasType>int(11)|0s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="375" parent="351" name="name">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="376" parent="351" name="idCard">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="377" parent="351" name="phone">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
   </database-model>
 </dataSource>
