@@ -1,7 +1,10 @@
+package Modules;
+
+import Modules.Book;
 
 public class Reservation {
     private Integer user_id;
-    private Book Book;
+    private Modules.Book Book;
     private User User;
     private String bookTitle;
     private String bookIsbn;

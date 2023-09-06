@@ -1,29 +1,35 @@
+package Modules;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
 import Connection.DbConnection;
+import App.libraryManagement;
+
+
 public class Book {
     Connection connection = DbConnection.getConnection();
     private int id;
     private String title;
     private Author author;
     private String isbn;
-    private String status;
-    private Integer quantityConstant;
+    private Integer quantityTotal;
     private Integer quantity;
     private Integer quantityLost;
     private Integer quantityReserved;
 
-    public Book(int id ,String title, Author author, String isbn, String status, Integer quantity, Integer quantityLost, Integer quantityReserved,Integer quantityConstant) {
+    public Book(int id, String title, Author author, String isbn, Integer quantity, Integer quantityLost, Integer quantityReserved, Integer quantityTotal) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.isbn = isbn;
-        this.status = status;
+        this.quantityTotal = quantityTotal;
         this.quantity = quantity;
         this.quantityLost = quantityLost;
         this.quantityReserved = quantityReserved;
-        this.quantityConstant = quantityConstant;
+    }
+
+    public Book() {
+
     }
 
     public Author getAuthor() {
@@ -34,12 +40,12 @@ public class Book {
         this.author = author;
     }
 
-    public Integer getQuantityConstant() {
-        return quantityConstant;
+    public Integer getQuantityTotal() {
+        return quantityTotal;
     }
 
-    public void setQuantityConstant(Integer quantityConstant) {
-        this.quantityConstant = quantityConstant;
+    public void setQuantityTotal(Integer quantityTotal) {
+        this.quantityTotal = quantityTotal;
     }
 
     public int getId() {
@@ -64,14 +70,6 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Integer getQuantity() {
@@ -101,12 +99,18 @@ public class Book {
     public void CreateBook(Book book){
         try{
             Connection connection = DbConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO books VALUES (?,?,?,?,?,?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO books VALUES (?,?,?,?,?,?,?,?)");
+            ps.setInt(1,book.getId());
+            ps.setString(2, book.getTitle());
+            ps.setObject(3,book.getAuthor());
+            ps.setString(4,book.getIsbn());
+            ps.setInt(5,book.getQuantityTotal());
+            ps.setInt(6,book.getQuantity());
+            ps.setInt(7,book.getQuantityLost());
+            ps.setInt(8,book.getQuantityReserved());
         }catch (Exception error){
-
+            System.out.println(error);
         }
-
-
     }
     public List<Book> getAllBooks() {
         // get method
