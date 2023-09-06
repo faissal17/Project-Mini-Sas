@@ -13,9 +13,8 @@ CREATE TABLE books (
    id INT PRIMARY KEY,
    title VARCHAR(255),
    author_id INT,
-   isbn VARCHAR(255),
-   status VARCHAR(255),
-   quantityConstant INT,
+   isbn VARCHAR(255) unique,
+   quantityTotal INT,
    quantity INT,
    quantityLost INT,
    quantityReserved INT,
@@ -35,6 +34,7 @@ CREATE TABLE reservations (
   bookIsbn VARCHAR(255),
   dateDeReservation DATETIME,
   dateDeReturn DATETIME,
+  status VARCHAR(255),
   FOREIGN KEY (book_id) REFERENCES books(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );

@@ -1,23 +1,20 @@
 package Modules;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import Connection.DbConnection;
-import App.libraryManagement;
-
 
 public class Book {
-    Connection connection = DbConnection.getConnection();
     private int id;
     private String title;
     private Author author;
     private String isbn;
-    private Integer quantityTotal;
-    private Integer quantity;
-    private Integer quantityLost;
-    private Integer quantityReserved;
+    private int quantityTotal;
+    private int quantity;
+    private int quantityLost;
+    private int quantityReserved;
 
-    public Book(int id, String title, Author author, String isbn, Integer quantity, Integer quantityLost, Integer quantityReserved, Integer quantityTotal) {
+    public Book(int id, String title, Author author, String isbn, int quantity, int quantityLost, int quantityReserved, int quantityTotal) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -28,8 +25,11 @@ public class Book {
         this.quantityReserved = quantityReserved;
     }
 
-    public Book() {
 
+    public Book(){
+    }
+
+    public Book(String name, Author author, String isbn, int quantityTotal, int quantity, int quantityLost, int quantityReserved) {
     }
 
     public Author getAuthor() {
@@ -88,40 +88,73 @@ public class Book {
         this.quantityLost = quantityLost;
     }
 
+    public void setQuantityReserved(Integer quantityImprinted) {
+        this.quantityReserved = quantityReserved;
+    }
+
     public Integer getQuantityReserved() {
         return quantityReserved;
     }
 
-    public void setQuantityReserved(Integer quantityImprinted) {
-        this.quantityReserved = quantityReserved;
-    }
+
     // start of methods
-    public void CreateBook(Book book){
+    public int CreateBook(Book book){
+        int updated = 0;
+
         try{
             Connection connection = DbConnection.getConnection();
             PreparedStatement ps = connection.prepareStatement("INSERT INTO books VALUES (?,?,?,?,?,?,?,?)");
             ps.setInt(1,book.getId());
             ps.setString(2, book.getTitle());
-            ps.setObject(3,book.getAuthor());
+            ps.setInt(3, getAuthor().getId());
             ps.setString(4,book.getIsbn());
             ps.setInt(5,book.getQuantityTotal());
             ps.setInt(6,book.getQuantity());
             ps.setInt(7,book.getQuantityLost());
             ps.setInt(8,book.getQuantityReserved());
+            updated = ps.executeUpdate();
         }catch (Exception error){
             System.out.println(error);
         }
+        return updated;
     }
-    public List<Book> getAllBooks() {
-        // get method
-        return null;
+    public List<Book> getAllBooks() throws SQLException {
+        List<Book> BookList = new ArrayList<Book>();
+        Connection connection = DbConnection.getConnection();
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM books");
+        return BookList;
     }
-    public void UpdateBook(Book book){
-        // update method
+    public int UpdateBook(Book book){
+        int update = 0;
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("UPDATE SET title = ?,author_id = ?,isbn = ?,qunatityTotal = ?,quantity = ?,quantityLost = ?,quantityReserved= ?");
+            ps.setString(1, book.getTitle());
+            ps.setInt(2,1);
+            ps.setString(3,book.getIsbn());
+            ps.setInt(4,book.getQuantityTotal());
+            ps.setInt(5,book.getQuantity());
+            ps.setInt(6,book.getQuantityLost());
+            ps.setInt(7,book.getQuantityReserved());
+            update = ps.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return update;
     }
-
-    public void DeleteBook(String title,String isbn){
-        // delete methode
+    public int DeleteBook(String title,String isbn) throws Exception{
+        int status = 0;
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM books WHERE books.title = ? and books.isbn = ?");
+            ps.setString(1, title);
+            ps.setString(2, isbn);
+            status = ps.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return status;
     }
     public Book SearchBook(String isbn) {
         // search method
