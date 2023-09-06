@@ -10,7 +10,7 @@ CREATE TABLE author (
 );
 
 CREATE TABLE books (
-   id INT PRIMARY KEY,
+   id INT PRIMARY KEY auto_increment,
    title VARCHAR(255),
    author_id INT,
    isbn VARCHAR(255) unique,

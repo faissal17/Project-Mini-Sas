@@ -26,10 +26,16 @@ public class Book {
     }
 
 
-    public Book(){
-    }
+    public Book() {}
 
-    public Book(String name, Author author, String isbn, int quantityTotal, int quantity, int quantityLost, int quantityReserved) {
+    public Book(String title, Author author, String isbn, int quantityTotal, int quantity, int quantityLost, int quantityReserved) {
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.quantityTotal = quantityTotal;
+        this.quantity = quantity;
+        this.quantityLost = quantityLost;
+        this.quantityReserved = quantityReserved;
     }
 
     public Author getAuthor() {
@@ -98,51 +104,64 @@ public class Book {
 
 
     // start of methods
-    public int CreateBook(Book book){
-        int updated = 0;
 
-        try{
+    public void getAllBooks() throws SQLException {
+       // List<Book> BookList = new ArrayList<Book>();
+        try {
+            Connection connection = DbConnection.getConnection();
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM books");
+
+            while(rs.next()){
+                System.out.println("Book Name : "+rs.getString("title") +"\n"+ "Books isbn : "+ rs.getString("isbn" )+"\n"+ "book quantity : " + rs.getString("quantity" ));
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+
+    }
+
+    public int CreateBook(Book book) {
+        int updated = 0;
+        try {
             Connection connection = DbConnection.getConnection();
             PreparedStatement ps = connection.prepareStatement("INSERT INTO books VALUES (?,?,?,?,?,?,?,?)");
-            ps.setInt(1,book.getId());
+            ps.setInt(1, book.getId());
             ps.setString(2, book.getTitle());
-            ps.setInt(3, getAuthor().getId());
-            ps.setString(4,book.getIsbn());
-            ps.setInt(5,book.getQuantityTotal());
-            ps.setInt(6,book.getQuantity());
-            ps.setInt(7,book.getQuantityLost());
-            ps.setInt(8,book.getQuantityReserved());
+            ps.setInt(3, 1);
+            ps.setString(4, book.getIsbn());
+            ps.setInt(5, book.getQuantityTotal());
+            ps.setInt(6, book.getQuantity());
+            ps.setInt(7, book.getQuantityLost());
+            ps.setInt(8, book.getQuantityReserved());
             updated = ps.executeUpdate();
-        }catch (Exception error){
+        } catch (Exception error) {
             System.out.println(error);
         }
         return updated;
     }
-    public List<Book> getAllBooks() throws SQLException {
-        List<Book> BookList = new ArrayList<Book>();
-        Connection connection = DbConnection.getConnection();
-        Statement st = connection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM books");
-        return BookList;
-    }
-    public int UpdateBook(Book book){
+    public int UpdateBook(Book book) {
         int update = 0;
         try {
             Connection connection = DbConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("UPDATE SET title = ?,author_id = ?,isbn = ?,qunatityTotal = ?,quantity = ?,quantityLost = ?,quantityReserved= ?");
+            PreparedStatement ps = connection.prepareStatement("UPDATE books SET title = ?, author_id = ?, isbn = ?, quantityTotal = ?, quantity = ?, quantityLost = ?, quantityReserved = ? WHERE id = ?");
             ps.setString(1, book.getTitle());
             ps.setInt(2,1);
-            ps.setString(3,book.getIsbn());
-            ps.setInt(4,book.getQuantityTotal());
-            ps.setInt(5,book.getQuantity());
-            ps.setInt(6,book.getQuantityLost());
-            ps.setInt(7,book.getQuantityReserved());
+            ps.setString(3, book.getIsbn());
+            ps.setInt(4, book.getQuantityTotal());
+            ps.setInt(5, book.getQuantity());
+            ps.setInt(6, book.getQuantityLost());
+            ps.setInt(7, book.getQuantityReserved());
+            ps.setInt(8, book.getId());
             update = ps.executeUpdate();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return update;
     }
+
+
     public int DeleteBook(String title,String isbn) throws Exception{
         int status = 0;
         try {
@@ -156,7 +175,7 @@ public class Book {
         }
         return status;
     }
-    public Book SearchBook(String isbn) {
+    public Book SearchBook (String isbn){
         // search method
         return null;
     }

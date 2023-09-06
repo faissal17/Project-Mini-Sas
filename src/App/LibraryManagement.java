@@ -15,7 +15,7 @@ public class LibraryManagement {
         while (!exit) {
             System.out.println("Library Management System");
             System.out.println("1. Add a Book");
-            System.out.println("2. List Available Books");
+            System.out.println("2. List of Books");
             System.out.println("3. update existing book");
             System.out.println("4. Delete a book");
             System.out.println("0. Exit");
@@ -30,7 +30,7 @@ public class LibraryManagement {
                     getAllBooks();
                     break;
                 case 3:
-                    System.out.println("3. update existing book");
+                    UpdateBook();
                     break;
                 case 4:
                     DeleteBook();
@@ -47,18 +47,15 @@ public class LibraryManagement {
     }
 
     public static void getAllBooks() throws SQLException {
-        List<Book> BookList = Modules.getAllBooks();
+        Book book = new Book();
+        book.getAllBooks();
     }
 
     public static void CreateBook() {
         scanner.nextLine();
 
-        System.out.println("Enter book id:");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
         System.out.println("Enter book name:");
-        String name = scanner.nextLine();
+        String title = scanner.nextLine();
 
         System.out.println("Enter Author name:");
         String author_name = scanner.nextLine();
@@ -78,7 +75,7 @@ public class LibraryManagement {
         System.out.println("Enter book quantity Reserved:");
         int quantityReserved = scanner.nextInt();
 
-        Book book = new Book(id, name, author, isbn, quantityTotal,quantity,quantityLost,quantityReserved);
+        Book book = new Book(title, author, isbn, quantityTotal,quantity,quantityLost,quantityReserved);
         int status = Modules.CreateBook(book);
         if(status ==1 )
         {
@@ -89,6 +86,46 @@ public class LibraryManagement {
             System.out.println("ERROR while adding book");
         }
     }
+    public static void UpdateBook() throws Exception {
+        scanner.nextLine();
+
+        System.out.println("Enter the book ID you want to update:");
+        int bookId = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Enter the new book name:");
+        String title = scanner.nextLine();
+
+        System.out.println("Enter the new Author name:");
+        String authorName = scanner.nextLine();
+        Author author = new Author(0, authorName);
+
+        System.out.println("Enter the new book ISBN:");
+        String isbn = scanner.nextLine();
+
+        System.out.println("Enter the new book QuantityTotal:");
+        int quantityTotal = scanner.nextInt();
+
+        System.out.println("Enter the new book Quantity:");
+        int quantity = scanner.nextInt();
+
+        System.out.println("Enter the new book quantity Lost:");
+        int quantityLost = scanner.nextInt();
+
+        System.out.println("Enter the new book quantity Reserved:");
+        int quantityReserved = scanner.nextInt();
+
+        Book book = new Book(bookId, title, author, isbn, quantityTotal, quantity, quantityLost, quantityReserved);
+        int status = Modules.UpdateBook(book);
+
+        if (status == 1) {
+            System.out.println("Book updated successfully");
+        } else {
+            System.out.println("ERROR while updating book");
+        }
+    }
+
+
     public static void DeleteBook() throws Exception {
         scanner.nextLine();
 
@@ -103,7 +140,7 @@ public class LibraryManagement {
         }
         else
         {
-            System.out.println("ERROR while deleting product");
+            System.out.println("ERROR while deleting book");
         }
     }
 }
