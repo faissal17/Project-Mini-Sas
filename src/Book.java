@@ -1,8 +1,12 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
+import Connection.DbConnection;
 public class Book {
+    Connection connection = DbConnection.getConnection();
     private int id;
     private String title;
-    private Author author_id;
+    private Author author;
     private String isbn;
     private String status;
     private Integer quantityConstant;
@@ -10,10 +14,10 @@ public class Book {
     private Integer quantityLost;
     private Integer quantityReserved;
 
-    public Book(int id ,String title, Author author_id, String isbn, String status, Integer quantity, Integer quantityLost, Integer quantityReserved,Integer quantityConstant) {
+    public Book(int id ,String title, Author author, String isbn, String status, Integer quantity, Integer quantityLost, Integer quantityReserved,Integer quantityConstant) {
         this.id = id;
         this.title = title;
-        this.author_id = author_id;
+        this.author = author;
         this.isbn = isbn;
         this.status = status;
         this.quantity = quantity;
@@ -22,12 +26,12 @@ public class Book {
         this.quantityConstant = quantityConstant;
     }
 
-    public Author getAuthor_id() {
-        return author_id;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthor_id(Author author_id) {
-        this.author_id = author_id;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public Integer getQuantityConstant() {
@@ -52,14 +56,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Author getAuthor() {
-        return author_id;
-    }
-
-    public void setAuthor(Author author) {
-        this.author_id = author_id;
     }
 
     public String getIsbn() {
@@ -101,8 +97,16 @@ public class Book {
     public void setQuantityReserved(Integer quantityImprinted) {
         this.quantityReserved = quantityReserved;
     }
+    // start of methods
     public void CreateBook(Book book){
-        // create method
+        try{
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO books VALUES (?,?,?,?,?,?,?,?,?)");
+        }catch (Exception error){
+
+        }
+
+
     }
     public List<Book> getAllBooks() {
         // get method

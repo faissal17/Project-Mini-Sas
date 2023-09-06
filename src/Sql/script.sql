@@ -19,26 +19,34 @@ CREATE TABLE books (
    quantity INT,
    quantityLost INT,
    quantityReserved INT,
-   FOREIGN KEY (author_id) REFERENCES author(id)
+   FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE
 );
-
+CREATE TABLE users (
+   id INT PRIMARY KEY,
+   name VARCHAR(255),
+   idCard VARCHAR(255),
+   phone VARCHAR(255)
+);
 CREATE TABLE reservations (
-  user_id VARCHAR(255),
+  id INT PRIMARY KEY,
+  book_id INT,
+  user_id INT,
   bookTitle VARCHAR(255),
   bookIsbn VARCHAR(255),
   dateDeReservation DATETIME,
-  dateDeReturn DATETIME
+  dateDeReturn DATETIME,
+  FOREIGN KEY (book_id) REFERENCES books(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
-CREATE TABLE user (
-  id INT PRIMARY KEY,
-  name VARCHAR(255),
-  idCard VARCHAR(255),
-  phone VARCHAR(255)
-);
-
+DELIMITER //
 CREATE TRIGGER reserve
     AFTER UPDATE
     ON books FOR EACH ROW
-    UPDATE books
-    SET quantityReserved = NEW.quantityReserved + 1;
+BEGIN
+    IF NEW.quantityReserved = OLD.quantityReserved + 1 THEN
+        UPDATE books
+        SET quantityReserved = NEW.quantityReserved;
+    END IF;
+END
+//
+DELIMITER ;
