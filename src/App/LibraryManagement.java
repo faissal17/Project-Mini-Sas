@@ -154,11 +154,24 @@ public class LibraryManagement {
             System.out.println("ERROR while deleting book");
         }
     }
-    public static void SearchBook() throws Exception{
+    public static void SearchBook() throws Exception {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the name of the book you want to search for:");
-        String bookName = scanner.nextLine();
-        Book.SearchBook(bookName);
+        System.out.println("Enter 1 to Search by book name or 2 to search author name");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        if (choice == 1) {
+            System.out.println("Enter the name of the book you want to search for:");
+            String bookName = scanner.nextLine();
+            Book.SearchBookByTitle(bookName);
+        } else if (choice == 2) {
+            System.out.println("Enter the name of the author you want to search for:");
+            String author = scanner.nextLine();
+            Book.SearchBookByAuthor(author);
+        } else {
+            System.out.println("Please enter '1' for book name or '2' for author.");
+        }
+
         scanner.close();
     }
+
 }

@@ -120,7 +120,7 @@ public class Book {
         try {
             Connection connection = DbConnection.getConnection();
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM `books` WHERE books.quantityTotal > books.quantity + books.quantityLost + books.quantityReserved;");
+            ResultSet rs = st.executeQuery("SELECT * FROM `books` WHERE books.quantity > 0;");
 
             while(rs.next()){
                 System.out.println("Book Name : "+rs.getString("title") +"\n"+ "Books isbn : "+ rs.getString("isbn" )+"\n"+ "book quantity : " + rs.getString("quantity" ));
@@ -167,8 +167,6 @@ public class Book {
         }
         return update;
     }
-
-
     public int DeleteBook(String title,String isbn) throws Exception{
         int status = 0;
         try {
@@ -182,11 +180,24 @@ public class Book {
         }
         return status;
     }
-    public static void SearchBook(String title) throws Exception{
+    public static void SearchBookByTitle(String title) throws Exception{
         try {
             Connection connection = DbConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM books WHERE books.title = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `books` WHERE books.title = ?");
             ps.setString(1,title);
+            ResultSet st = ps.executeQuery();
+            while(st.next()){
+                System.out.println("Book Name : "+st.getString("title") +"\n"+ "Books isbn : "+ st.getString("isbn" )+"\n"+ "book quantity : " + st.getString("quantity" ));
+            }
+        }catch (Exception e){
+            System.out.println("Book is not exist");
+        }
+    }
+    public static void SearchBookByAuthor(String author) throws Exception{
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `books` INNER JOIN author ON author.id WHERE author_id = ?;");
+            ps.setObject(1,1);
             ResultSet st = ps.executeQuery();
             while(st.next()){
                 System.out.println("Book Name : "+st.getString("title") +"\n"+ "Books isbn : "+ st.getString("isbn" )+"\n"+ "book quantity : " + st.getString("quantity" ));
