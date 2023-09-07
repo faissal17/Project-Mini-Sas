@@ -169,7 +169,7 @@ public class Book {
     }
 
 
-    /*public int DeleteBook(String title,String isbn) throws Exception{
+    public int DeleteBook(String title,String isbn) throws Exception{
         int status = 0;
         try {
             Connection connection = DbConnection.getConnection();
@@ -181,7 +181,19 @@ public class Book {
             System.out.println(e);
         }
         return status;
-    }*/
-
+    }
+    public static void SearchBook(String title) throws Exception{
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM books WHERE books.title = ?");
+            ps.setString(1,title);
+            ResultSet st = ps.executeQuery();
+            while(st.next()){
+                System.out.println("Book Name : "+st.getString("title") +"\n"+ "Books isbn : "+ st.getString("isbn" )+"\n"+ "book quantity : " + st.getString("quantity" ));
+            }
+        }catch (Exception e){
+            System.out.println("Book is not exist");
+        }
+    }
 }
 
