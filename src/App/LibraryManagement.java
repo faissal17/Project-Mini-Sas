@@ -96,6 +96,7 @@ public class LibraryManagement {
         {
             System.out.println("ERROR while adding book");
         }
+        scanner.close();
     }
     public static void UpdateBook() throws Exception {
         scanner.nextLine();
@@ -134,6 +135,7 @@ public class LibraryManagement {
         } else {
             System.out.println("ERROR while updating book");
         }
+        scanner.close();
     }
 
 
@@ -153,6 +155,7 @@ public class LibraryManagement {
         {
             System.out.println("ERROR while deleting book");
         }
+        scanner.close();
     }
     public static void SearchBook() throws Exception {
         Scanner scanner = new Scanner(System.in);
@@ -170,7 +173,6 @@ public class LibraryManagement {
         } else {
             System.out.println("Please enter '1' for book name or '2' for author.");
         }
-
         scanner.close();
     }
 
