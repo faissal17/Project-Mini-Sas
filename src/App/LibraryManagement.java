@@ -14,11 +14,12 @@ public class LibraryManagement {
         boolean exit = false;
         while (!exit) {
             System.out.println("Library Management System");
-            System.out.println("1. Add a Book");
-            System.out.println("2. List of Books");
-            System.out.println("3. update existing book");
-            System.out.println("4. Delete a book");
-            System.out.println("5. Search book");
+            System.out.println("1. Add a book");
+            System.out.println("2. List of books");
+            System.out.println("3. List of Available books");
+            System.out.println("4. update existing book");
+            System.out.println("5. Delete a book");
+            System.out.println("6. Search book");
             System.out.println("0. Exit");
 
             int choice = scanner.nextInt();
@@ -31,12 +32,15 @@ public class LibraryManagement {
                     getAllBooks();
                     break;
                 case 3:
-                    UpdateBook();
+                    getAvailableBooks();
                     break;
                 case 4:
-                    DeleteBook();
+                    UpdateBook();
                     break;
                 case 5:
+                    DeleteBook();
+                    break;
+                case 6:
                     SearchBook();
                 case 0:
                     System.out.println("Exiting the Library Management System.");
@@ -54,7 +58,10 @@ public class LibraryManagement {
         Book book = new Book();
         book.getAllBooks();
     }
-
+    public static void getAvailableBooks() throws SQLException {
+        Book book = new Book();
+        book.getAvailableBooks();
+    }
     public static void CreateBook() {
         scanner.nextLine();
 
