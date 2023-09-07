@@ -18,6 +18,7 @@ public class LibraryManagement {
             System.out.println("2. List of Books");
             System.out.println("3. update existing book");
             System.out.println("4. Delete a book");
+            System.out.println("5. Search book");
             System.out.println("0. Exit");
 
             int choice = scanner.nextInt();
@@ -34,6 +35,9 @@ public class LibraryManagement {
                     break;
                 case 4:
                     DeleteBook();
+                    break;
+                case 5:
+                    SearchBook();
                 case 0:
                     System.out.println("Exiting the Library Management System.");
                     exit = true;
@@ -142,5 +146,12 @@ public class LibraryManagement {
         {
             System.out.println("ERROR while deleting book");
         }
+    }
+    public static void SearchBook() throws Exception{
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the name of the book you want to search for:");
+        String bookName = scanner.nextLine();
+        Book.SearchBook(bookName);
+        scanner.close();
     }
 }

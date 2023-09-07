@@ -1,7 +1,6 @@
 package Modules;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+
 import Connection.DbConnection;
 
 public class Book {
@@ -102,11 +101,9 @@ public class Book {
         return quantityReserved;
     }
 
-
     // start of methods
 
     public void getAllBooks() throws SQLException {
-       // List<Book> BookList = new ArrayList<Book>();
         try {
             Connection connection = DbConnection.getConnection();
             Statement st = connection.createStatement();
@@ -118,10 +115,7 @@ public class Book {
         }catch (Exception e){
             System.out.println(e);
         }
-
-
     }
-
     public int CreateBook(Book book) {
         int updated = 0;
         try {
@@ -175,9 +169,18 @@ public class Book {
         }
         return status;
     }
-    public Book SearchBook (String isbn){
-        // search method
-        return null;
+    public static void SearchBook(String title) throws Exception{
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM books WHERE books.title = ?");
+            ps.setString(1,title);
+            ResultSet st = ps.executeQuery();
+            while(st.next()){
+                System.out.println("Book Name : "+st.getString("title") +"\n"+ "Books isbn : "+ st.getString("isbn" )+"\n"+ "book quantity : " + st.getString("quantity" ));
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 }
 

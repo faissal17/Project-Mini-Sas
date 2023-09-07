@@ -5,7 +5,7 @@ CREATE DATABASE if not exists library;
 USE library;
 
 CREATE TABLE author (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY auto_increment,
     name VARCHAR(255)
 );
 
