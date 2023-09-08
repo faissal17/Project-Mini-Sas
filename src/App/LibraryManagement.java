@@ -2,9 +2,9 @@ package App;
 import Modules.Author;
 import Modules.Book;
 import Modules.Reservation;
-import Modules.User;
-
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -177,7 +177,42 @@ public class LibraryManagement {
             System.out.println("Please enter '1' for book name or '2' for author.");
         }
     }
-    public static void ReserveBook(){
+    public static void ReserveBook() {
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Enter The Book Name you want to borrow:");
+        String bookTitle = scanner.nextLine();
+
+        System.out.println("Enter the Book ISBN you want to borrow:");
+        String bookIsbn = scanner.nextLine();
+
+        System.out.println("Enter the date of borrowing the book (yyyy-MM-dd HH:mm:ss):");
+        String dateStringDeReservation = scanner.nextLine();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dateDeReservation;
+
+        try {
+            dateDeReservation = dateFormat.parse(dateStringDeReservation);
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Please enter a date in the format yyyy-MM-dd HH:mm:ss");
+            return;
+        }
+
+        System.out.println("Enter the date of return the book (yyyy-MM-dd HH:mm:ss):");
+        String dateStringDeReturn = scanner.nextLine();
+        Date dateDeReturn;
+
+        try {
+            dateDeReturn = dateFormat.parse(dateStringDeReturn);
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Please enter a date in the format yyyy-MM-dd HH:mm:ss");
+            return;
+        }
+
+        String result = ReserveBook(0, bookTitle, "UserName", bookIsbn, dateDeReservation, dateDeReturn);
+
+        // Print the result or handle it as needed
+        System.out.println(result);
     }
+
 }
