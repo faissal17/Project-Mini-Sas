@@ -126,7 +126,6 @@ public class Book {
             while(rs.next()){
                 System.out.println("Book Name : "+rs.getString("title") +"\n"+ "Books isbn : "+ rs.getString("isbn" )+"\n"+ "book quantity : " + rs.getString("quantity" ));
                 System.out.println("-----------------------------------------------------------------");
-
             }
         }catch (Exception e){
             System.out.println(e);
@@ -209,5 +208,6 @@ public class Book {
             System.out.println("Book is not exist");
         }
     }
+
 }
 

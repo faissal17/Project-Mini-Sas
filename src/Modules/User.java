@@ -1,4 +1,8 @@
 package Modules;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import Connection.DbConnection;
 
 public class User {
     private int id;
@@ -43,5 +47,20 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+    public static int AddUser(User user){
+        int update = 0;
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO users VALUES (?,?,?,?)");
+            ps.setInt(1,user.getId());
+            ps.setString(2,user.getName());
+            ps.setString(3,user.getIdCard());
+            ps.setString(4,user.getPhone());
+            update = ps.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return update;
     }
 }

@@ -1,13 +1,17 @@
 package App;
 import Modules.Author;
 import Modules.Book;
+import Modules.Reservation;
+import Modules.User;
 
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Scanner;
 
 public class LibraryManagement {
     static Book Modules = new Book();
+
+    static Reservation ModulesReservation = new Reservation();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws Exception {
@@ -20,10 +24,10 @@ public class LibraryManagement {
             System.out.println("4. update existing book");
             System.out.println("5. Delete a book");
             System.out.println("6. Search book");
+            System.out.println("7. Reserve a book");
             System.out.println("0. Exit");
 
             int choice = scanner.nextInt();
-
             switch (choice) {
                 case 1:
                     CreateBook();
@@ -42,6 +46,9 @@ public class LibraryManagement {
                     break;
                 case 6:
                     SearchBook();
+                    break;
+                case 7:
+                    ReserveBook();
                 case 0:
                     System.out.println("Exiting the Library Management System.");
                     exit = true;
@@ -51,7 +58,6 @@ public class LibraryManagement {
                     break;
             }
         }
-        scanner.close();
     }
 
     public static void getAllBooks() throws SQLException {
@@ -96,7 +102,6 @@ public class LibraryManagement {
         {
             System.out.println("ERROR while adding book");
         }
-        scanner.close();
     }
     public static void UpdateBook() throws Exception {
         scanner.nextLine();
@@ -135,7 +140,6 @@ public class LibraryManagement {
         } else {
             System.out.println("ERROR while updating book");
         }
-        scanner.close();
     }
 
 
@@ -155,7 +159,6 @@ public class LibraryManagement {
         {
             System.out.println("ERROR while deleting book");
         }
-        scanner.close();
     }
     public static void SearchBook() throws Exception {
         Scanner scanner = new Scanner(System.in);
@@ -173,7 +176,8 @@ public class LibraryManagement {
         } else {
             System.out.println("Please enter '1' for book name or '2' for author.");
         }
-        scanner.close();
     }
+    public static void ReserveBook(){
 
+    }
 }

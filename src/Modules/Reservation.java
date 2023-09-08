@@ -1,48 +1,50 @@
 package Modules;
-
-import Modules.Book;
+import java.sql.Date;
+import Connection.DbConnection;
 
 public class Reservation {
-    private Integer user_id;
-    private Modules.Book Book;
-    private User User;
+    private int id;
+    private Book book;
+    private User user;
     private String bookTitle;
     private String bookIsbn;
-    private String dateDeReservation;
-    private String dateDeReturn;
+    private Date dateDeReservation;
+    private Date dateDeReturn;
 
-         public Reservation(Integer user_id, String bookTitle, String bookIsbn, String dateDeReservation, String dateDeReturn, Book Book, User User){
-            this.user_id = user_id;
-            this.bookTitle = bookTitle;
-            this.bookIsbn = bookIsbn;
-            this.dateDeReservation = dateDeReservation;
-            this.dateDeReturn = dateDeReturn;
-            this.Book = Book;
-            this.User = User;
-         }
-
-    public Integer getUserId() {
-        return user_id;
+    public Reservation(int id, String bookTitle, String bookIsbn, Date dateDeReservation, Date dateDeReturn, Book book, User user) {
+        this.id = id;
+        this.bookTitle = bookTitle;
+        this.bookIsbn = bookIsbn;
+        this.dateDeReservation = dateDeReservation;
+        this.dateDeReturn = dateDeReturn;
+        this.book = book;
+        this.user = user;
+    }
+    public Reservation() {
     }
 
-    public void setUserId(Integer user_id) {
-        this.user_id = user_id;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Book getBook() {
-        return Book;
+        return book;
     }
 
     public void setBook(Book book) {
-        Book = book;
+        this.book = book;
     }
 
     public User getUser() {
-        return User;
+        return user;
     }
 
     public void setUser(User user) {
-        User = user;
+        this.user = user;
     }
 
     public String getBookTitle() {
@@ -61,19 +63,23 @@ public class Reservation {
         this.bookIsbn = bookIsbn;
     }
 
-    public String getDateDeReservation() {
+    public Date getDateDeReservation() {
         return dateDeReservation;
     }
 
-    public void setDateDeReservation(String dateDeReservation) {
+    public void setDateDeReservation(Date dateDeReservation) {
         this.dateDeReservation = dateDeReservation;
     }
 
-    public String getDateDeReturn() {
+    public Date getDateDeReturn() {
         return dateDeReturn;
     }
 
-    public void setDateDeReturn(String dateDeReturn) {
+    public void setDateDeReturn(Date dateDeReturn) {
         this.dateDeReturn = dateDeReturn;
     }
+    public static void ReserveBook(){
+
+    }
 }
+

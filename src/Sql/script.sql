@@ -21,7 +21,7 @@ CREATE TABLE books (
    FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE
 );
 CREATE TABLE users (
-   id INT PRIMARY KEY,
+   id INT PRIMARY KEY auto_increment,
    name VARCHAR(255),
    idCard VARCHAR(255),
    phone VARCHAR(255)
@@ -34,7 +34,6 @@ CREATE TABLE reservations (
   bookIsbn VARCHAR(255),
   dateDeReservation DATETIME,
   dateDeReturn DATETIME,
-  status VARCHAR(255),
   FOREIGN KEY (book_id) REFERENCES books(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
