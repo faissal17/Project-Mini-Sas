@@ -27,7 +27,7 @@ CREATE TABLE users (
    phone VARCHAR(255)
 );
 CREATE TABLE reservations (
-  id INT PRIMARY KEY,
+  id INT PRIMARY KEY auto_increment,
   book_id INT,
   user_id INT,
   bookTitle VARCHAR(255),

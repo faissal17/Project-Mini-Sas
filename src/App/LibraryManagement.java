@@ -2,8 +2,11 @@ package App;
 import Modules.Author;
 import Modules.Book;
 import Modules.Reservation;
-import java.text.SimpleDateFormat;
+import Modules.User;
+
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -49,7 +52,7 @@ public class LibraryManagement {
                     SearchBook();
                     break;
                 case 7:
-                    ReserveBook();
+                    reserveBook();
                     break;
                 case 8:
                     statistics();
@@ -182,12 +185,60 @@ public class LibraryManagement {
             System.out.println("Please enter '1' for book name or '2' for author.");
         }
     }
-    public static void ReserveBook() {
-        //
+
+    public static void reserveBook() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the book ISBN:");
+        String isbn = scanner.nextLine();
+
+        System.out.println("Enter the book title:");
+        String title = scanner.nextLine();
+
+        System.out.println("Enter your name:");
+        String userName = scanner.nextLine();
+        System.out.println("Enter your ID card:");
+        String userIdCard = scanner.nextLine();
+        System.out.println("Enter your phone number:");
+        String userPhone = scanner.nextLine();
+
+        System.out.println("Enter the date of reservation (yyyy-MM-dd HH:mm:ss):");
+        String reservationDateStr = scanner.nextLine();
+        Timestamp reservationDate = null;
+
+        // Prompt for the date of return
+        System.out.println("Enter the date of return (yyyy-MM-dd HH:mm:ss):");
+        String returnDateStr = scanner.nextLine();
+        Timestamp returnDate = null;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date parsedReservationDate = dateFormat.parse(reservationDateStr);
+            reservationDate = new Timestamp(parsedReservationDate.getTime());
+
+            Date parsedReturnDate = dateFormat.parse(returnDateStr);
+            returnDate = new Timestamp(parsedReturnDate.getTime());
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Please use yyyy-MM-dd HH:mm:ss format.");
+            return;
+        }
+
+        User user = new User();
+        user.setName(userName);
+        user.setIdCard(userIdCard);
+        user.setPhone(userPhone);
+
+        Reservation reservation = new Reservation();
+        reservation.setBookIsbn(isbn);
+        reservation.setUser(user);
+        reservation.setBookTitle(title);
+        reservation.setDateDeReservation(reservationDate);
+        reservation.setDateDeReturn(returnDate);
+
+        reservation.ReserveBook();
     }
     public static void statistics(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter 1 to see book statistics, Enter 2 to see author statistics, Enter 3 to see book statistics");
+        System.out.println("Enter 1 to see book statistics, Enter 2 to see author statistics");
         int choice = scanner.nextInt();
         if(choice == 1){
             Book book = new Book();
