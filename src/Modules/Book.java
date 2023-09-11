@@ -209,5 +209,31 @@ public class Book {
         }
     }
 
+    public static void BookStatistics(){
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT `title` ,`isbn`,`quantity`, `quantityLost`, `quantityReserved` FROM `books`");
+            ResultSet st = ps.executeQuery();
+            while (st.next()){
+                System.out.println("Book Name : "+st.getString("title") +"\n"+ "Books isbn : "+ st.getString("isbn" )+"\n"+ "book quantity : " + st.getString("quantity")+"\n"+ "book quantity borrowed : "+st.getString("quantityReserved")+"\n"+"lost books : "+st.getString("quantityLost"));
+                System.out.println("-----------------------------------------------------------------");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public static void AuthorStatistics(){
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `author` INNER JOIN `books` ON author.id WHERE author.id = books.author_id;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                System.out.println("author name : " +rs.getString("name") +"\n" + "Book Name : "+rs.getString("title") +"\n"+ "Books isbn : "+ rs.getString("isbn" )+"\n"+ "book quantity : " + rs.getString("quantity")+"\n"+ "book quantity borrowed : "+rs.getString("quantityReserved")+"\n"+"lost books : "+rs.getString("quantityLost"));
+                System.out.println("-----------------------------------------------------------------");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
 }
 
