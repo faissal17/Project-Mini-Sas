@@ -99,14 +99,13 @@ public class Reservation {
 
                 int userId = AddUser(user);
 
-                PreparedStatement prepare = connection.prepareStatement("INSERT INTO reservations VALUES (?,?,?,?,?,?,?)");
+                PreparedStatement prepare = connection.prepareStatement("INSERT INTO reservations VALUES (?,?,?,?,?,?)");
                 prepare.setInt(1, getId());
                 prepare.setInt(2, bookId);
                 prepare.setInt(3, userId);
-                prepare.setString(4, getBookTitle());
-                prepare.setString(5, getBookIsbn());
-                prepare.setTimestamp(6, getDateDeReservation());
-                prepare.setTimestamp(7, getDateDeReturn());
+                prepare.setString(4, getBookIsbn());
+                prepare.setTimestamp(5, getDateDeReservation());
+                prepare.setTimestamp(6, getDateDeReturn());
                 prepare.executeUpdate();
 
                 PreparedStatement updateBookStatus = connection.prepareStatement("UPDATE books SET quantity = ?, quantityReserved = ? WHERE id = ?");
@@ -121,36 +120,44 @@ public class Reservation {
             System.out.println(e);
         }
     }
-
     public static int AddUser(User user) {
         int userId = -1;
         try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement prepare = connection.prepareStatement("SELECT id FROM users WHERE name = ?");
-            prepare.setString(1, user.getName());
-            ResultSet rs = prepare.executeQuery();
+            Connection connect = DbConnection.getConnection();
+            PreparedStatement checkIdCard = connect.prepareStatement("SELECT idCard FROM users WHERE users.idCard = ?");
+            checkIdCard.setString(1,user.getIdCard());
+            ResultSet result = checkIdCard.executeQuery();
+            if(result.next()){
+                System.out.println("user id card is already exist");
+            }else {
+                try {
+                    Connection connection = DbConnection.getConnection();
+                    PreparedStatement prepare = connection.prepareStatement("SELECT id FROM users WHERE name = ?");
+                    prepare.setString(1, user.getName());
+                    ResultSet rs = prepare.executeQuery();
 
-            if (!rs.next()) {
-                // User does not exist, insert a new user
-                PreparedStatement insertUser = connection.prepareStatement("INSERT INTO users (name, idCard, phone) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-                insertUser.setString(1, user.getName());
-                insertUser.setString(2, user.getIdCard());
-                insertUser.setString(3, user.getPhone());
-                insertUser.executeUpdate();
+                    if (!rs.next()) {
+                        // User does not exist, insert a new user
+                        PreparedStatement insertUser = connection.prepareStatement("INSERT INTO users (name, idCard, phone) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                        insertUser.setString(1, user.getName());
+                        insertUser.setString(2, user.getIdCard());
+                        insertUser.setString(3, user.getPhone());
+                        insertUser.executeUpdate();
 
-                ResultSet generatedKeys = insertUser.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    userId = generatedKeys.getInt(1);
+                        ResultSet generatedKeys = insertUser.getGeneratedKeys();
+                        if (generatedKeys.next()) {
+                            userId = generatedKeys.getInt(1);
+                        }
+                    } else {
+                        userId = rs.getInt("id");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
-            } else {
-                userId = rs.getInt("id");
             }
-        } catch (Exception e) {
+        } catch (Exception e){
             System.out.println(e);
         }
         return userId;
     }
-
 }
-
-

@@ -198,7 +198,7 @@ public class Book {
     public static void SearchBookByAuthor(String author) throws Exception{
         try {
             Connection connection = DbConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `books` INNER JOIN author ON author.id WHERE author_id = ?;");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `books` INNER JOIN author ON author.id WHERE author_id = ?");
             ps.setObject(1,1);
             ResultSet st = ps.executeQuery();
             while(st.next()){
@@ -225,7 +225,7 @@ public class Book {
     public static void AuthorStatistics(){
         try {
             Connection connection = DbConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `author` INNER JOIN `books` ON author.id WHERE author.id = books.author_id;");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `author` INNER JOIN `books` ON author.id WHERE author.id = books.author_id");
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 System.out.println("author name : " +rs.getString("name") +"\n" + "Book Name : "+rs.getString("title") +"\n"+ "Books isbn : "+ rs.getString("isbn" )+"\n"+ "book quantity : " + rs.getString("quantity")+"\n"+ "book quantity borrowed : "+rs.getString("quantityReserved")+"\n"+"lost books : "+rs.getString("quantityLost"));

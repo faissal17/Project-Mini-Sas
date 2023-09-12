@@ -191,13 +191,11 @@ public class LibraryManagement {
         System.out.println("Enter the book ISBN:");
         String isbn = scanner.nextLine();
 
-        System.out.println("Enter the book title:");
-        String title = scanner.nextLine();
-
         System.out.println("Enter your name:");
         String userName = scanner.nextLine();
         System.out.println("Enter your ID card:");
         String userIdCard = scanner.nextLine();
+
         System.out.println("Enter your phone number:");
         String userPhone = scanner.nextLine();
 
@@ -212,13 +210,13 @@ public class LibraryManagement {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            Date parsedReservationDate = dateFormat.parse(reservationDateStr);
-            reservationDate = new Timestamp(parsedReservationDate.getTime());
+            Date ReservationDate = dateFormat.parse(reservationDateStr);
+            reservationDate = new Timestamp(ReservationDate.getTime());
 
-            Date parsedReturnDate = dateFormat.parse(returnDateStr);
-            returnDate = new Timestamp(parsedReturnDate.getTime());
+            Date ReturnDate = dateFormat.parse(returnDateStr);
+            returnDate = new Timestamp(ReturnDate.getTime());
         } catch (ParseException e) {
-            System.out.println("Invalid date format. Please use yyyy-MM-dd HH:mm:ss format.");
+            System.out.println(e);
             return;
         }
 
@@ -230,7 +228,6 @@ public class LibraryManagement {
         Reservation reservation = new Reservation();
         reservation.setBookIsbn(isbn);
         reservation.setUser(user);
-        reservation.setBookTitle(title);
         reservation.setDateDeReservation(reservationDate);
         reservation.setDateDeReturn(returnDate);
 

@@ -30,22 +30,21 @@ CREATE TABLE reservations (
   id INT PRIMARY KEY auto_increment,
   book_id INT,
   user_id INT,
-  bookTitle VARCHAR(255),
   bookIsbn VARCHAR(255),
-  dateDeReservation DATETIME,
-  dateDeReturn DATETIME,
+  dateDeReservation TIMESTAMP,
+  dateDeReturn TIMESTAMP,
   FOREIGN KEY (book_id) REFERENCES books(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
 DELIMITER //
-CREATE TRIGGER reserve
-    AFTER UPDATE
-    ON books FOR EACH ROW
+CREATE TRIGGER before_update_book_status
+    BEFORE UPDATE ON books
+    FOR EACH ROW
 BEGIN
-    IF NEW.quantityReserved = OLD.quantityReserved + 1 THEN
-        UPDATE books
-        SET quantityReserved = NEW.quantityReserved;
-    END IF;
-END
+    SET NEW.quantity = OLD.quantity - 1;
+    SET NEW.quantityReserved = OLD.quantityReserved + 1;
+END;
 //
 DELIMITER ;
+
