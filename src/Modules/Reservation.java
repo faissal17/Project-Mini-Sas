@@ -121,14 +121,14 @@ public class Reservation {
         }
     }
     public static int AddUser(User user) {
-        int userId = user.getId();
+        int userId = 1;
         try {
             Connection connect = DbConnection.getConnection();
             PreparedStatement checkIdCard = connect.prepareStatement("SELECT idCard FROM users WHERE users.idCard = ?");
             checkIdCard.setString(1,user.getIdCard());
             ResultSet result = checkIdCard.executeQuery();
             if(result.next()){
-                System.out.println("user id card is already exist");
+                System.out.println("user id card is already exist so we gonna just keep the operation based on your id card");
             }else {
                 try {
                     Connection connection = DbConnection.getConnection();
