@@ -85,6 +85,7 @@ public class LibraryManagement {
         System.out.println("Enter Author name:");
         String author_name = scanner.nextLine();
         Author author = new Author(0,author_name);
+
         System.out.println("Enter book ISBN:");
         String isbn = scanner.nextLine();
 
@@ -114,9 +115,8 @@ public class LibraryManagement {
     public static void UpdateBook() throws Exception {
         scanner.nextLine();
 
-        System.out.println("Enter the book ID you want to update:");
-        int bookId = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Enter the book ISBN you want to update:");
+        String isbn = scanner.nextLine();
 
         System.out.println("Enter the new book name:");
         String title = scanner.nextLine();
@@ -125,8 +125,8 @@ public class LibraryManagement {
         String authorName = scanner.nextLine();
         Author author = new Author(0, authorName);
 
-        System.out.println("Enter the new book ISBN:");
-        String isbn = scanner.nextLine();
+        System.out.println("Enter the book new ISBN:");
+        String NewIsbn = scanner.nextLine();
 
         System.out.println("Enter the new book QuantityTotal:");
         int quantityTotal = scanner.nextInt();
@@ -140,7 +140,7 @@ public class LibraryManagement {
         System.out.println("Enter the new book quantity Reserved:");
         int quantityReserved = scanner.nextInt();
 
-        Book book = new Book(bookId, title, author, isbn, quantityTotal, quantity, quantityLost, quantityReserved);
+        Book book = new Book(title, author, isbn,quantityTotal, quantity, quantityLost, quantityReserved);
         int status = Modules.UpdateBook(book);
 
         if (status == 1) {

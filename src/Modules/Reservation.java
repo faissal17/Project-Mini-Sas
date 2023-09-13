@@ -121,7 +121,7 @@ public class Reservation {
         }
     }
     public static int AddUser(User user) {
-        int userId = -1;
+        int userId = user.getId();
         try {
             Connection connect = DbConnection.getConnection();
             PreparedStatement checkIdCard = connect.prepareStatement("SELECT idCard FROM users WHERE users.idCard = ?");

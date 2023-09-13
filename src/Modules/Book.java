@@ -134,36 +134,51 @@ public class Book {
     public int CreateBook(Book book) {
         int updated = 0;
         try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO books VALUES (?,?,?,?,?,?,?,?)");
-            ps.setInt(1, book.getId());
-            ps.setString(2, book.getTitle());
-            ps.setInt(3, 1);
-            ps.setString(4, book.getIsbn());
-            ps.setInt(5, book.getQuantityTotal());
-            ps.setInt(6, book.getQuantity());
-            ps.setInt(7, book.getQuantityLost());
-            ps.setInt(8, book.getQuantityReserved());
-            updated = ps.executeUpdate();
+            if (book.getQuantityTotal() >= book.getQuantity() &&
+                    book.getQuantityTotal() > book.getQuantityLost() &&
+                    book.getQuantityTotal() > book.getQuantityReserved()) {
+
+                Connection connection = DbConnection.getConnection();
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO books VALUES (?,?,?,?,?,?,?,?)");
+                ps.setInt(1, book.getId());
+                ps.setString(2, book.getTitle());
+                ps.setInt(3, 1);
+                ps.setString(4, book.getIsbn());
+                ps.setInt(5, book.getQuantityTotal());
+                ps.setInt(6, book.getQuantity());
+                ps.setInt(7, book.getQuantityLost());
+                ps.setInt(8, book.getQuantityReserved());
+                updated = ps.executeUpdate();
+            } else {
+                System.out.println("Validation error: quantityTotal must be greater than other quantities.");
+            }
         } catch (Exception error) {
             System.out.println(error);
         }
         return updated;
     }
+
     public int UpdateBook(Book book) {
         int update = 0;
         try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("UPDATE books SET title = ?, author_id = ?, isbn = ?, quantityTotal = ?, quantity = ?, quantityLost = ?, quantityReserved = ? WHERE id = ?");
-            ps.setString(1, book.getTitle());
-            ps.setInt(2,1);
-            ps.setString(3, book.getIsbn());
-            ps.setInt(4, book.getQuantityTotal());
-            ps.setInt(5, book.getQuantity());
-            ps.setInt(6, book.getQuantityLost());
-            ps.setInt(7, book.getQuantityReserved());
-            ps.setInt(8, book.getId());
-            update = ps.executeUpdate();
+            if (book.getQuantityTotal() >= book.getQuantity() &&
+                    book.getQuantityTotal() > book.getQuantityLost() &&
+                    book.getQuantityTotal() > book.getQuantityReserved()) {
+
+                Connection connection = DbConnection.getConnection();
+                PreparedStatement ps = connection.prepareStatement("UPDATE books SET title = ?, author_id = ?, isbn = ?, quantityTotal = ?, quantity = ?, quantityLost = ?, quantityReserved = ? WHERE isbn = ?");
+                ps.setString(1, book.getTitle());
+                ps.setInt(2, 1);
+                ps.setString(3, book.getIsbn());
+                ps.setInt(4, book.getQuantityTotal());
+                ps.setInt(5, book.getQuantity());
+                ps.setInt(6, book.getQuantityLost());
+                ps.setInt(7, book.getQuantityReserved());
+                ps.setString(8, book.getIsbn());
+                update = ps.executeUpdate();
+            } else {
+                System.out.println("Validation error: quantityTotal must be greater than other quantities.");
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -190,6 +205,7 @@ public class Book {
             ResultSet st = ps.executeQuery();
             while(st.next()){
                 System.out.println("Book Name : "+st.getString("title") +"\n"+ "Books isbn : "+ st.getString("isbn" )+"\n"+ "book quantity : " + st.getString("quantity" ));
+                System.out.println("-----------------------------------------------------------------");
             }
         }catch (Exception e){
             System.out.println("Book is not exist");
@@ -198,17 +214,17 @@ public class Book {
     public static void SearchBookByAuthor(String author) throws Exception{
         try {
             Connection connection = DbConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `books` INNER JOIN author ON author.id WHERE author_id = ?");
-            ps.setObject(1,1);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `books` INNER JOIN author ON author.id WHERE author.name = ?");
+            ps.setObject(1,author);
             ResultSet st = ps.executeQuery();
             while(st.next()){
                 System.out.println("Book Name : "+st.getString("title") +"\n"+ "Books isbn : "+ st.getString("isbn" )+"\n"+ "book quantity : " + st.getString("quantity" ));
+                System.out.println("-----------------------------------------------------------------");
             }
         }catch (Exception e){
             System.out.println("Book is not exist");
         }
     }
-
     public static void BookStatistics(){
         try {
             Connection connection = DbConnection.getConnection();
