@@ -97,7 +97,7 @@ public class Reservation {
                 int quantity = isbnResult.getInt("quantity");
                 int quantityReserved = isbnResult.getInt("quantityReserved");
 
-                int userId = AddUser(user);
+                int userId = User.AddUser(user);
 
                 PreparedStatement prepare = connection.prepareStatement("INSERT INTO reservations VALUES (?,?,?,?,?,?)");
                 prepare.setInt(1, getId());
@@ -119,45 +119,5 @@ public class Reservation {
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
-    public static int AddUser(User user) {
-        int userId = 1;
-        try {
-            Connection connect = DbConnection.getConnection();
-            PreparedStatement checkIdCard = connect.prepareStatement("SELECT idCard FROM users WHERE users.idCard = ?");
-            checkIdCard.setString(1,user.getIdCard());
-            ResultSet result = checkIdCard.executeQuery();
-            if(result.next()){
-                System.out.println("user id card is already exist so we gonna just keep the operation based on your id card");
-            }else {
-                try {
-                    Connection connection = DbConnection.getConnection();
-                    PreparedStatement prepare = connection.prepareStatement("SELECT id FROM users WHERE name = ?");
-                    prepare.setString(1, user.getName());
-                    ResultSet rs = prepare.executeQuery();
-
-                    if (!rs.next()) {
-                        // User does not exist, insert a new user
-                        PreparedStatement insertUser = connection.prepareStatement("INSERT INTO users (name, idCard, phone) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-                        insertUser.setString(1, user.getName());
-                        insertUser.setString(2, user.getIdCard());
-                        insertUser.setString(3, user.getPhone());
-                        insertUser.executeUpdate();
-
-                        ResultSet generatedKeys = insertUser.getGeneratedKeys();
-                        if (generatedKeys.next()) {
-                            userId = generatedKeys.getInt(1);
-                        }
-                    } else {
-                        userId = rs.getInt("id");
-                    }
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-            }
-        } catch (Exception e){
-            System.out.println(e);
-        }
-        return userId;
     }
 }

@@ -1,6 +1,5 @@
 package Modules;
 import java.sql.*;
-
 import Connection.DbConnection;
 
 public class Book {
@@ -138,25 +137,33 @@ public class Book {
                     book.getQuantityTotal() > book.getQuantityLost() &&
                     book.getQuantityTotal() > book.getQuantityReserved()) {
 
-                Connection connection = DbConnection.getConnection();
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO books VALUES (?,?,?,?,?,?,?,?)");
-                ps.setInt(1, book.getId());
-                ps.setString(2, book.getTitle());
-                ps.setInt(3, 1);
-                ps.setString(4, book.getIsbn());
-                ps.setInt(5, book.getQuantityTotal());
-                ps.setInt(6, book.getQuantity());
-                ps.setInt(7, book.getQuantityLost());
-                ps.setInt(8, book.getQuantityReserved());
-                updated = ps.executeUpdate();
+                int authorId = Author.AddAuthor(book.getAuthor());
+
+                if (authorId > 0) {
+                    Connection connection = DbConnection.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO books (id, title, author_id, isbn, quantityTotal, quantity, quantityLost, quantityReserved) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    ps.setInt(1, book.getId());
+                    ps.setString(2, book.getTitle());
+                    ps.setInt(3, authorId);
+                    ps.setString(4, book.getIsbn());
+                    ps.setInt(5, book.getQuantityTotal());
+                    ps.setInt(6, book.getQuantity());
+                    ps.setInt(7, book.getQuantityLost());
+                    ps.setInt(8, book.getQuantityReserved());
+                    updated = ps.executeUpdate();
+                } else {
+                    System.out.println("Author creation failed.");
+                }
             } else {
-                System.out.println("Validation error: quantityTotal must be greater than other quantities.");
+                System.out.println("QuantityTotal must be greater than other quantities.");
             }
         } catch (Exception error) {
             System.out.println(error);
         }
+
         return updated;
     }
+
 
     public int UpdateBook(Book book) {
         int update = 0;

@@ -3,7 +3,6 @@ import Modules.Author;
 import Modules.Book;
 import Modules.Reservation;
 import Modules.User;
-
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -77,14 +76,13 @@ public class LibraryManagement {
         book.getAvailableBooks();
     }
     public static void CreateBook() {
-        scanner.nextLine();
-
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter book name:");
         String title = scanner.nextLine();
 
         System.out.println("Enter Author name:");
-        String author_name = scanner.nextLine();
-        Author author = new Author(0,author_name);
+        String authorName = scanner.nextLine();
+        Author author = new Author(0, authorName);
 
         System.out.println("Enter book ISBN:");
         String isbn = scanner.nextLine();
@@ -101,14 +99,12 @@ public class LibraryManagement {
         System.out.println("Enter book quantity Reserved:");
         int quantityReserved = scanner.nextInt();
 
-        Book book = new Book(title, author, isbn, quantityTotal,quantity,quantityLost,quantityReserved);
+        Book book = new Book(title, author, isbn, quantityTotal, quantity, quantityLost, quantityReserved);
         int status = Modules.CreateBook(book);
-        if(status ==1 )
-        {
+
+        if (status == 1) {
             System.out.println("Book added successfully");
-        }
-        else
-        {
+        } else {
             System.out.println("ERROR while adding book");
         }
     }
